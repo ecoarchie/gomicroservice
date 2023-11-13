@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"slices"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -65,6 +66,15 @@ func UpdateProduct(id int, p *Product) error {
 	productList[pos] = p
 	
 	return nil
+}
+//FIXME add not found id exception
+func DeleteProduct(id int) {
+	for i, p := range productList {
+		if p.ID == id {
+			productList = slices.Delete(productList, i, i+1)
+		}
+	}
+
 }
 
 var ErrProductNotFound = fmt.Errorf("Product not found")

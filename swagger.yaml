@@ -1,0 +1,67 @@
+basePath: /
+consumes:
+    - application/json
+definitions:
+    Product:
+        properties:
+            description:
+                type: string
+                x-go-name: Description
+            id:
+                format: int64
+                type: integer
+                x-go-name: ID
+            name:
+                type: string
+                x-go-name: Name
+            price:
+                format: float
+                type: number
+                x-go-name: Price
+            sku:
+                type: string
+                x-go-name: SCU
+        type: object
+        x-go-package: github.com/ecoarchie/gomicroservice/data
+info:
+    description: Documentation for Product API
+    title: of Product API
+    version: 1.0.0
+paths:
+    /:
+        get:
+            description: Returns a list of products
+            operationId: GetProducts
+            responses:
+                "200":
+                    $ref: '#/responses/productsResponse'
+            tags:
+                - products
+    /{id}:
+        delete:
+            operationId: deleteProduct
+            parameters:
+                - description: the ID of the product to delete from database
+                  format: int64
+                  in: path
+                  name: id
+                  required: true
+                  type: integer
+                  x-go-name: ID
+            responses:
+                "201":
+                    $ref: '#/responses/noContent'
+            tags:
+                - products
+produces:
+    - application/json
+responses:
+    productsResponse:
+        description: A list of products returns in a response
+        schema:
+            items:
+                $ref: '#/definitions/Product'
+            type: array
+schemes:
+    - http
+swagger: "2.0"
